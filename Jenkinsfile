@@ -53,8 +53,11 @@ pipeline {
                     echo 'Deploying to DEV environment...'
                     sh '''
                         docker image pull ${DOCKER_IMAGE}:${DOCKER_TAG}
-                        docker network create dev || echo "Network already exists"
-                        docker container run -d --rm --name server-golang -p 3005:3005 --network dev ${DOCKER_IMAGE}:${DOCKER_TAG}
+
+                        # Kiểm tra và tạo network nếu cần
+                        docker network inspect dev >/dev/null 2>&1 || docker network create dev
+
+                        docker container run -d --rm --name server-golang -p 3006:3005 --network dev ${DOCKER_IMAGE}:${DOCKER_TAG}
                     '''
                 }
             }
@@ -71,7 +74,7 @@ pipeline {
                             docker container rm server-golang || echo "No container to remove"
                             docker image rm ${DOCKER_IMAGE}:${DOCKER_TAG} || echo "No image to remove"
                             docker image pull ${DOCKER_IMAGE}:${DOCKER_TAG} || { echo "Failed to pull image"; exit 1; }
-                            docker container run -d --rm --name server-golang -p 3005:3005 ${DOCKER_IMAGE}:${DOCKER_TAG} || { echo "Failed to run container"; exit 1; }
+                            docker container run -d --rm --name server-golang -p 3006:3005 ${DOCKER_IMAGE}:${DOCKER_TAG} || { echo "Failed to run container"; exit 1; }
                             EOF
                         '''
                     }
