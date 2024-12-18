@@ -6,7 +6,6 @@ pipeline {
         DOCKER_TAG = 'latest'
         PROD_SERVER = 'ec2-47-129-236-253.ap-southeast-1.compute.amazonaws.com'
         PROD_USER = 'ubuntu'
-        EMAIL_RECIPIENT = 'levunhatanh1997@gmail.com'
     }
 
     stages {
@@ -86,46 +85,24 @@ EOF
 
     post {
         success {
-            script {
-                try {
-                    emailext(
-                        subject: "Jenkins Build Successful: ${JOB_NAME} #${BUILD_NUMBER}",
-                        body: """<p>Good news!</p>
-                                <p>The build <b>${JOB_NAME}</b> #${BUILD_NUMBER} was successful.</p>
-                                <p>Check details at: <a href="${BUILD_URL}">${BUILD_URL}</a></p>""",
-                        to: "${EMAIL_RECIPIENT}"
-                    )
-                    echo "Success email sent to ${EMAIL_RECIPIENT}"
-                } catch (Exception e) {
-                    echo "Failed to send success email: ${e.getMessage()}"
-                }
-            }
+            emailext(
+                subject: 'Jenkins Build Successful: ${JOB_NAME} #${BUILD_NUMBER}',
+                body: '''<p>Good news!</p>
+                         <p>The build ${JOB_NAME} #${BUILD_NUMBER} was successful.</p>
+                         <p>Check details at: <a href="${BUILD_URL}">${BUILD_URL}</a></p>''',
+                to: "levunhatanh1997@gmail.com"
+            )
         }
         failure {
-            script {
-                try {
-                    emailext(
-                        subject: "Jenkins Build Failed: ${JOB_NAME} #${BUILD_NUMBER}",
-                        body: """<p>Unfortunately, the build <b>${JOB_NAME}</b> #${BUILD_NUMBER} failed.</p>
-                                <p>Check details at: <a href="${BUILD_URL}">${BUILD_URL}</a></p>""",
-                        to: "${EMAIL_RECIPIENT}"
-                    )
-                    echo "Failure email sent to ${EMAIL_RECIPIENT}"
-                } catch (Exception e) {
-                    echo "Failed to send failure email: ${e.getMessage()}"
-                }
-            }
+            emailext(
+                subject: 'Jenkins Build Failed: ${JOB_NAME} #${BUILD_NUMBER}',
+                body: '''<p>Unfortunately, the build ${JOB_NAME} #${BUILD_NUMBER} failed.</p>
+                         <p>Check details at: <a href="${BUILD_URL}">${BUILD_URL}</a></p>''',
+                to: "levunhatanh1997@gmail.com"
+            )
         }
         always {
-            script {
-                try {
-                    cleanWs()
-                    echo "Workspace cleaned successfully."
-                } catch (Exception e) {
-                    echo "Failed to clean workspace: ${e.getMessage()}"
-                }
-            }
+            cleanWs()
         }
     }
-
 }
