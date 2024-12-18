@@ -90,7 +90,7 @@ EOF
                 body: '''<p>Good news!</p>
                          <p>The build ${JOB_NAME} #${BUILD_NUMBER} was successful.</p>
                          <p>Check details at: <a href="${BUILD_URL}">${BUILD_URL}</a></p>''',
-                to: "levunhatanh1997@gmail.com"
+                to: "lvna150397@gmail.com"
             )
         }
         failure {
@@ -98,7 +98,7 @@ EOF
                 subject: 'Jenkins Build Failed: ${JOB_NAME} #${BUILD_NUMBER}',
                 body: '''<p>Unfortunately, the build ${JOB_NAME} #${BUILD_NUMBER} failed.</p>
                          <p>Check details at: <a href="${BUILD_URL}">${BUILD_URL}</a></p>''',
-                to: "levunhatanh1997@gmail.com"
+                to: "lvna150397@gmail.com"
             )
         }
         always {
