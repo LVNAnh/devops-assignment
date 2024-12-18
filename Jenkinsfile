@@ -6,6 +6,8 @@ pipeline {
         DOCKER_TAG = 'latest'
         PROD_SERVER = 'ec2-47-129-236-253.ap-southeast-1.compute.amazonaws.com'
         PROD_USER = 'ubuntu'
+        TELEGRAM_BOT_TOKEN = '7577054664:AAEdeS1fagGs9B9YwBsCT63k3aSFqKwBlkU'
+        TELEGRAM_CHAT_ID = '5333038188'
     }
 
     stages {
@@ -86,21 +88,22 @@ EOF
     post {
         success {
             script {
-                try {
-                    echo "Sending success email..."
-                    emailext(
-                        subject: "Jenkins Build Successful: Server Assignment",
-                        body: """<p>Good news!</p>
-                                <p>The build Server Assignment was successful.</p>
-                                <p>Check details at: <a href="http://47.129.236.253:3006/">http://47.129.236.253:3006/</a></p>""",
-                        to: "lvna150397@gmail.com",
-                        replyTo: "levunhatanh1997@gmail.com",
-                        mimeType: "text/plain"
-                    )
-                    echo "Success email sent"
-                } catch (Exception e) {
-                    echo "Failed to send success email: ${e.getMessage()}"
-                }
+                def message = "✅ Jenkins Build SUCCESS: Job '${env.JOB_NAME}' Build #${env.BUILD_NUMBER}. Check: ${env.BUILD_URL}"
+                sh """
+                curl -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+                    -d "chat_id=${TELEGRAM_CHAT_ID}" \
+                    -d "text=${message}"
+                """
+            }
+        }
+        failure {
+            script {
+                def message = "❌ Jenkins Build FAILURE: Job '${env.JOB_NAME}' Build #${env.BUILD_NUMBER}. Check: ${env.BUILD_URL}"
+                sh """
+                curl -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+                    -d "chat_id=${TELEGRAM_CHAT_ID}" \
+                    -d "text=${message}"
+                """
             }
         }
         always {
