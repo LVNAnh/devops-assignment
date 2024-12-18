@@ -86,24 +86,46 @@ EOF
 
     post {
         success {
-            emailext(
-                subject: 'Jenkins Build Successful: ${JOB_NAME} #${BUILD_NUMBER}',
-                body: '''<p>Good news!</p>
-                         <p>The build ${JOB_NAME} #${BUILD_NUMBER} was successful.</p>
-                         <p>Check details at: <a href="${BUILD_URL}">${BUILD_URL}</a></p>''',
-                to: "${EMAIL_RECIPIENT}"
-            )
+            script {
+                try {
+                    emailext(
+                        subject: "Jenkins Build Successful: ${JOB_NAME} #${BUILD_NUMBER}",
+                        body: """<p>Good news!</p>
+                                <p>The build <b>${JOB_NAME}</b> #${BUILD_NUMBER} was successful.</p>
+                                <p>Check details at: <a href="${BUILD_URL}">${BUILD_URL}</a></p>""",
+                        to: "${EMAIL_RECIPIENT}"
+                    )
+                    echo "Success email sent to ${EMAIL_RECIPIENT}"
+                } catch (Exception e) {
+                    echo "Failed to send success email: ${e.getMessage()}"
+                }
+            }
         }
         failure {
-            emailext(
-                subject: 'Jenkins Build Failed: ${JOB_NAME} #${BUILD_NUMBER}',
-                body: '''<p>Unfortunately, the build ${JOB_NAME} #${BUILD_NUMBER} failed.</p>
-                         <p>Check details at: <a href="${BUILD_URL}">${BUILD_URL}</a></p>''',
-                to: "${EMAIL_RECIPIENT}"
-            )
+            script {
+                try {
+                    emailext(
+                        subject: "Jenkins Build Failed: ${JOB_NAME} #${BUILD_NUMBER}",
+                        body: """<p>Unfortunately, the build <b>${JOB_NAME}</b> #${BUILD_NUMBER} failed.</p>
+                                <p>Check details at: <a href="${BUILD_URL}">${BUILD_URL}</a></p>""",
+                        to: "${EMAIL_RECIPIENT}"
+                    )
+                    echo "Failure email sent to ${EMAIL_RECIPIENT}"
+                } catch (Exception e) {
+                    echo "Failed to send failure email: ${e.getMessage()}"
+                }
+            }
         }
         always {
-            cleanWs()
+            script {
+                try {
+                    cleanWs()
+                    echo "Workspace cleaned successfully."
+                } catch (Exception e) {
+                    echo "Failed to clean workspace: ${e.getMessage()}"
+                }
+            }
         }
     }
+
 }
