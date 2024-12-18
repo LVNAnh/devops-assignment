@@ -89,10 +89,10 @@ EOF
                 try {
                     echo "Sending success email..."
                     emailext(
-                        subject: "Jenkins Build Successful: ${JOB_NAME} #${BUILD_NUMBER}",
+                        subject: "Jenkins Build Successful: Server Assignment",
                         body: """<p>Good news!</p>
-                                <p>The build ${JOB_NAME} #${BUILD_NUMBER} was successful.</p>
-                                <p>Check details at: <a href="${BUILD_URL}">${BUILD_URL}</a></p>""",
+                                <p>The build Server Assignment was successful.</p>
+                                <p>Check details at: <a href="http://47.129.236.253:3006/">http://47.129.236.253:3006/</a></p>""",
                         to: "lvna150397@gmail.com",
                         replyTo: "levunhatanh1997@gmail.com",
                         mimeType: "text/html"
@@ -108,9 +108,9 @@ EOF
                 try {
                     echo "Sending failure email..."
                     emailext(
-                        subject: "Jenkins Build Failed: ${JOB_NAME} #${BUILD_NUMBER}",
-                        body: """<p>Unfortunately, the build ${JOB_NAME} #${BUILD_NUMBER} failed.</p>
-                                <p>Check details at: <a href="${BUILD_URL}">${BUILD_URL}</a></p>""",
+                        subject: "Jenkins Build Failed: Server Assignment",
+                        body: """<p>Unfortunately, the build Server Assignment failed.</p>
+                                <p>Check details at: <a href="http://47.129.236.253:3006/">http://47.129.236.253:3006/</a></p>""",
                         to: "lvna150397@gmail.com",
                         replyTo: "levunhatanh1997@gmail.com",
                         mimeType: "text/html"
