@@ -9,4 +9,5 @@ type User struct {
 	Email     string             `json:"email" bson:"email"`
 	Password  string             `json:"password" bson:"password"`
 	Age       int                `json:"age" bson:"age"`
+	Username  string             `json:"username" bson:"username"`
 }
