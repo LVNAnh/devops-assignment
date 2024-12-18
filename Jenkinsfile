@@ -65,16 +65,15 @@ pipeline {
                 script {
                     echo 'Deploying to Production...'
                     sshagent(['aws-ssh-key']) {
-                        sh '''
-                            ssh -o StrictHostKeyChecking=no ${PROD_USER}@${PROD_SERVER} <<-EOF
-                                docker container stop server-golang || echo "No container to stop"
-                                docker container rm server-golang || echo "No container to remove"
-                                docker image rm ${DOCKER_IMAGE}:${DOCKER_TAG} || echo "No image to remove"
-                                docker image pull ${DOCKER_IMAGE}:${DOCKER_TAG} || { echo "Failed to pull image"; exit 1; }
-                                docker container run -d --rm --name server-golang -p 3005:3005 ${DOCKER_IMAGE}:${DOCKER_TAG} || { echo "Failed to run container"; exit 1; }
-                            EOF
-                        '''
-                    }
+                    sh '''
+                        ssh -o StrictHostKeyChecking=no ${PROD_USER}@${PROD_SERVER} <<EOF
+                        docker container stop server-golang || echo "No container to stop"
+                        docker container rm server-golang || echo "No container to remove"
+                        docker image rm ${DOCKER_IMAGE}:${DOCKER_TAG} || echo "No image to remove"
+                        docker image pull ${DOCKER_IMAGE}:${DOCKER_TAG} || { echo "Failed to pull image"; exit 1; }
+                        docker container run -d --rm --name server-golang -p 3005:3005 ${DOCKER_IMAGE}:${DOCKER_TAG} || { echo "Failed to run container"; exit 1; }
+                        EOF
+                    '''
                 }
             }
         }
