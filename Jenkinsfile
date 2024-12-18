@@ -95,29 +95,11 @@ EOF
                                 <p>Check details at: <a href="http://47.129.236.253:3006/">http://47.129.236.253:3006/</a></p>""",
                         to: "lvna150397@gmail.com",
                         replyTo: "levunhatanh1997@gmail.com",
-                        mimeType: "text/html"
+                        mimeType: "text/plain"
                     )
                     echo "Success email sent"
                 } catch (Exception e) {
                     echo "Failed to send success email: ${e.getMessage()}"
-                }
-            }
-        }
-        failure {
-            script {
-                try {
-                    echo "Sending failure email..."
-                    emailext(
-                        subject: "Jenkins Build Failed: Server Assignment",
-                        body: """<p>Unfortunately, the build Server Assignment failed.</p>
-                                <p>Check details at: <a href="http://47.129.236.253:3006/">http://47.129.236.253:3006/</a></p>""",
-                        to: "lvna150397@gmail.com",
-                        replyTo: "levunhatanh1997@gmail.com",
-                        mimeType: "text/html"
-                    )
-                    echo "Failure email sent"
-                } catch (Exception e) {
-                    echo "Failed to send failure email: ${e.getMessage()}"
                 }
             }
         }
