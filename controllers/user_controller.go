@@ -89,8 +89,8 @@ func UpdateUser(c *gin.Context) {
 		return
 	}
 
-	var user models.User
-	if err := c.ShouldBindJSON(&user); err != nil {
+	var updates bson.M
+	if err := c.ShouldBindJSON(&updates); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -99,7 +99,7 @@ func UpdateUser(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	_, err = collection.UpdateOne(ctx, bson.M{"_id": objectID}, bson.M{"$set": user})
+	_, err = collection.UpdateOne(ctx, bson.M{"_id": objectID}, bson.M{"$set": updates})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update user"})
 		return
