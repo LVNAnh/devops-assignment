@@ -13,5 +13,5 @@ func main() {
 	router := gin.Default()
 	routes.UserRoutes(router)
 
-	router.Run(":3000")
+	router.Run(":3005")
 }
