@@ -6,6 +6,7 @@ pipeline {
         DOCKER_TAG = 'latest'
         PROD_SERVER = 'ec2-47-129-236-253.ap-southeast-1.compute.amazonaws.com'
         PROD_USER = 'ubuntu'
+        EMAIL_RECIPIENT = 'levunhatanh1997@gmail.com'
     }
 
     stages {
@@ -84,6 +85,23 @@ EOF
     }
 
     post {
+        success {
+            emailext(
+                subject: 'Jenkins Build Successful: ${JOB_NAME} #${BUILD_NUMBER}',
+                body: '''<p>Good news!</p>
+                         <p>The build ${JOB_NAME} #${BUILD_NUMBER} was successful.</p>
+                         <p>Check details at: <a href="${BUILD_URL}">${BUILD_URL}</a></p>''',
+                to: "${EMAIL_RECIPIENT}"
+            )
+        }
+        failure {
+            emailext(
+                subject: 'Jenkins Build Failed: ${JOB_NAME} #${BUILD_NUMBER}',
+                body: '''<p>Unfortunately, the build ${JOB_NAME} #${BUILD_NUMBER} failed.</p>
+                         <p>Check details at: <a href="${BUILD_URL}">${BUILD_URL}</a></p>''',
+                to: "${EMAIL_RECIPIENT}"
+            )
+        }
         always {
             cleanWs()
         }
