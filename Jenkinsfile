@@ -86,20 +86,7 @@ EOF
     post {
         success {
             script {
-                try {
-                    emailext(
-                        subject: 'Jenkins Build Successful: ${JOB_NAME} #${BUILD_NUMBER}',
-                        body: '''<p>Good news!</p>
-                                <p>The build ${JOB_NAME} #${BUILD_NUMBER} was successful.</p>
-                                <p>Check details at: <a href="${BUILD_URL}">${BUILD_URL}</a></p>''',
-                        to: "lvna150397@gmail.com",
-                        replyTo: "levunhatanh1997@gmail.com",
-                        mimeType: "text/html"
-                    )
-                    echo "Success email sent to lvna150397@gmail.com"
-                } catch (Exception e) {
-                    echo "Failed to send success email: ${e.getMessage()}"
-                }
+                try { echo "Sending success email..." emailext( subject: 'Jenkins Build Successful: ${JOB_NAME} #${BUILD_NUMBER}', body: '''<p>Good news!</p> <p>The build ${JOB_NAME} #${BUILD_NUMBER} was successful.</p> <p>Check details at: <a href="${BUILD_URL}">${BUILD_URL}</a></p>''', to: "lvna150397@gmail.com", replyTo: "levunhatanh1997@gmail.com", mimeType: "text/html" ) echo "Success email sent" } catch (Exception e) { echo "Failed to send success email: ${e.getMessage()}" }
             }
         }
         failure {
