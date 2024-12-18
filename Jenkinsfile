@@ -86,21 +86,36 @@ EOF
     post {
         success {
             script {
-                try { echo "Sending success email..." emailext( subject: 'Jenkins Build Successful: ${JOB_NAME} #${BUILD_NUMBER}', body: '''<p>Good news!</p> <p>The build ${JOB_NAME} #${BUILD_NUMBER} was successful.</p> <p>Check details at: <a href="${BUILD_URL}">${BUILD_URL}</a></p>''', to: "lvna150397@gmail.com", replyTo: "levunhatanh1997@gmail.com", mimeType: "text/html" ) echo "Success email sent" } catch (Exception e) { echo "Failed to send success email: ${e.getMessage()}" }
+                try {
+                    echo "Sending success email..."
+                    emailext(
+                        subject: "Jenkins Build Successful: ${JOB_NAME} #${BUILD_NUMBER}",
+                        body: """<p>Good news!</p>
+                                <p>The build ${JOB_NAME} #${BUILD_NUMBER} was successful.</p>
+                                <p>Check details at: <a href="${BUILD_URL}">${BUILD_URL}</a></p>""",
+                        to: "lvna150397@gmail.com",
+                        replyTo: "levunhatanh1997@gmail.com",
+                        mimeType: "text/html"
+                    )
+                    echo "Success email sent"
+                } catch (Exception e) {
+                    echo "Failed to send success email: ${e.getMessage()}"
+                }
             }
         }
         failure {
             script {
                 try {
+                    echo "Sending failure email..."
                     emailext(
-                        subject: 'Jenkins Build Failed: ${JOB_NAME} #${BUILD_NUMBER}',
-                        body: '''<p>Unfortunately, the build ${JOB_NAME} #${BUILD_NUMBER} failed.</p>
-                                <p>Check details at: <a href="${BUILD_URL}">${BUILD_URL}</a></p>''',
+                        subject: "Jenkins Build Failed: ${JOB_NAME} #${BUILD_NUMBER}",
+                        body: """<p>Unfortunately, the build ${JOB_NAME} #${BUILD_NUMBER} failed.</p>
+                                <p>Check details at: <a href="${BUILD_URL}">${BUILD_URL}</a></p>""",
                         to: "lvna150397@gmail.com",
                         replyTo: "levunhatanh1997@gmail.com",
                         mimeType: "text/html"
                     )
-                    echo "Failure email sent to lvna150397@gmail.com"
+                    echo "Failure email sent"
                 } catch (Exception e) {
                     echo "Failed to send failure email: ${e.getMessage()}"
                 }
