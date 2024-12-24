@@ -80,7 +80,6 @@ devops-assignment/
 
 ####  **Chạy Backend:**
 ```bash
-cd backend
 go run main.go
 ```
 
