@@ -76,7 +76,7 @@ devops-assignment/
 
 ---
 
-### 🛠 **2. Chạy Backend và Frontend Thủ Công**
+### 🛠 **2. Chạy Backend Thủ Công**
 
 ####  **Chạy Backend:**
 ```bash
