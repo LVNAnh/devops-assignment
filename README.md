@@ -81,7 +81,7 @@ devops-assignment/
 
 ####  **Chạy Backend:**
 ```bash
-go run main.go
+go run main.go hoặc fresh
 ```
 
 API sẽ hoạt động tại: (http://localhost:3005)  
