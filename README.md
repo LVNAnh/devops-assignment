@@ -76,3 +76,14 @@ devops-assignment/
 
 ---
 
+### 🛠 **2. Chạy Backend và Frontend Thủ Công**
+
+####  **Chạy Backend:**
+```bash
+cd backend
+go run main.go
+```
+
+API sẽ hoạt động tại: (http://localhost:3005)  
+
+---
