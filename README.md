@@ -41,8 +41,9 @@ devops-assignment/
 2. **Các Giai Đoạn (Stages)**  
    - **Clone Repository:** Sao chép source code từ nhánh `master` trên GitHub.  
    - **Build Docker Images:** Xây dựng image Docker cho Backend.  
-   - **Push Docker Images:** Đẩy image Docker lên DockerHub.  
-   - **Deploy to DEV:** Triển khai Backend trên môi trường phát triển (DEV) bằng Docker.  
+   - **Push to Docker Hub:** Đẩy image Docker lên DockerHub.  
+   - **Deploy Golang to DEV:** Triển khai Backend trên môi trường phát triển (DEV) bằng Docker.
+   - **Deploy to Production on AWS:** Triển khai sản phẩm lên môi trường web. 
 
 3. **Quản Lý Container và Mạng**  
    - Tạo mạng Docker (`dev`) nếu chưa tồn tại.  
@@ -105,3 +106,4 @@ API sẽ hoạt động tại: (http://localhost:3005)
 | PATCH  | /update-user/:id     | Cập nhật người dùng      |
 | DELETE | /delete-user/:id     | Xóa người dùng           |
 ---
+**Đường dẫn IP của backend đã được deploy trên AWS: **http://47.129.236.253:3006** **
