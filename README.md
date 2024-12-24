@@ -86,3 +86,22 @@ go run main.go
 API sẽ hoạt động tại: (http://localhost:3005)  
 
 ---
+
+## **API Endpoints**
+
+| Method | Endpoint             | Mô Tả                  |
+|--------|----------------------|------------------------|
+| GET    | /get-products        | Lấy danh sách sản phẩm |
+| GET    | /get-product/:id     | Lấy sản phẩm theo id   |
+| POST   | /create-product      | Tạo sản phẩm mới       |
+| PATCH  | /update-product/:id  | Cập nhật sản phẩm      |
+| DELETE | /delete-product/:id  | Xóa sản phẩm           |
+
+| Method | Endpoint             | Mô Tả                    |
+|--------|----------------------|--------------------------|
+| GET    | /get-users           | Lấy danh sách người dùng |
+| GET    | /get-user/:id        | Lấy người dùng theo id   |
+| POST   | /create-user         | Tạo người dùng mới       |
+| PATCH  | /update-user/:id     | Cập nhật người dùng      |
+| DELETE | /delete-user/:id     | Xóa người dùng           |
+---
