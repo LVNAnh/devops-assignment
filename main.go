@@ -12,7 +12,7 @@ func main() {
 
 	router := gin.Default()
 	routes.UserRoutes(router)
-	routes.ProductRoutes(router)
+	// routes.ProductRoutes(router)
 
 	router.Run(":3005")
 }
